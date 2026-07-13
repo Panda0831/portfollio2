@@ -1024,6 +1024,29 @@
   line-height: 1.5;
 }
 
+.interests-block {
+  margin-top: 8px;
+}
+
+.interests-block h3 {
+  margin-bottom: 12px;
+  font-size: 1rem;
+}
+
+.interest-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.interest-tags span {
+  padding: 7px 12px;
+  border: 1px solid var(--card-border);
+  border-radius: 999px;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+}
+
 /* Colors Utilities */
 .text-cyan { color: var(--accent-cyan); }
 .text-purple { color: var(--accent-purple); }
@@ -1166,6 +1189,97 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
   gap: 30px;
+}
+
+.project-feature {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.9fr) minmax(0, 1.1fr);
+  padding: 0;
+  overflow: hidden;
+}
+
+.blockchain-visual {
+  min-height: 320px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: radial-gradient(circle at 20% 20%, rgba(6, 182, 212, 0.18), transparent 42%), linear-gradient(145deg, rgba(15, 23, 42, 0.8), rgba(9, 9, 17, 0.9));
+  border-right: 1px solid var(--card-border);
+}
+
+.visual-caption, .project-highlights span {
+  color: var(--accent-cyan);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.blockchain-chain {
+  display: flex;
+  align-items: center;
+  margin: 28px 0 18px;
+}
+
+.chain-block {
+  width: 84px;
+  height: 84px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid rgba(6, 182, 212, 0.45);
+  border-radius: 14px;
+  background: rgba(6, 182, 212, 0.08);
+  color: var(--accent-cyan);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+}
+
+.chain-link {
+  width: 28px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
+}
+
+.blockchain-visual > p {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.project-feature-content {
+  padding: 38px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 22px;
+}
+
+.project-feature-content .project-desc {
+  max-width: 620px;
+  font-size: 1rem;
+}
+
+.project-highlights {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.project-highlights > div {
+  padding: 16px;
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+}
+
+.project-highlights p {
+  margin-top: 7px;
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+  line-height: 1.5;
 }
 
 .project-card {
@@ -1339,7 +1453,9 @@
 
 .skill-percentage {
   font-family: var(--font-mono);
-  color: var(--text-secondary);
+  color: var(--accent-cyan);
+  font-size: 0.78rem;
+  text-align: right;
 }
 
 .skill-bar-bg {
@@ -1612,13 +1728,53 @@
     grid-template-columns: 1fr;
     gap: 40px;
   }
+
+  .project-feature {
+    grid-template-columns: 1fr;
+  }
+
+  .blockchain-visual {
+    border-right: 0;
+    border-bottom: 1px solid var(--card-border);
+  }
   
   .skills-grid {
     grid-template-columns: 1fr 1fr;
   }
+
+  .project-highlights {
+    grid-template-columns: 1fr;
+  }
+
+  .project-feature-content {
+    padding: 28px 22px;
+  }
+
+  .blockchain-visual {
+    min-height: 280px;
+    padding: 24px;
+  }
+
+  .chain-block {
+    width: 70px;
+    height: 70px;
+  }
+
+  .chain-link {
+    width: 16px;
+  }
 }
 
 @media (max-width: 768px) {
+  .navbar-header {
+    height: 68px;
+    padding: 0 20px;
+  }
+
+  .navbar-header.scrolled {
+    height: 62px;
+  }
+
   .desktop-nav {
     display: none;
   }
@@ -1628,7 +1784,44 @@
   }
   
   .hero-title {
-    font-size: 2.6rem;
+    font-size: clamp(2rem, 10vw, 2.6rem);
+    letter-spacing: -1px;
+  }
+
+  .hero-section {
+    min-height: 100svh;
+    padding-top: 100px;
+  }
+
+  .hero-tagline {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 0.72rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+    margin-bottom: 28px;
+  }
+
+  .terminal-preview {
+    margin-bottom: 30px;
+  }
+
+  .terminal-header {
+    padding: 10px 12px;
+  }
+
+  .terminal-title {
+    font-size: 0.65rem;
+    margin-left: 4px;
+  }
+
+  .terminal-body {
+    padding: 14px;
+    font-size: 0.68rem;
+    line-height: 1.55;
   }
   
   .hero-actions {
@@ -1644,6 +1837,35 @@
   .skills-grid {
     grid-template-columns: 1fr;
   }
+
+  .section-header {
+    margin-bottom: 36px;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .values-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-text, .contact-info-desc {
+    font-size: 1rem;
+  }
+
+  .contact-detail-item {
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .contact-detail-item p, .contact-detail-item a {
+    overflow-wrap: anywhere;
+  }
+
+  .contact-form-container {
+    padding: 26px 20px;
+  }
   
   .footer-container {
     grid-template-columns: 1fr;
@@ -1657,5 +1879,32 @@
     flex-direction: column;
     gap: 15px;
     align-items: flex-start;
+  }
+
+  .footer {
+    padding: 42px 20px 28px;
+  }
+
+  .floating-scroll-top {
+    right: 16px;
+    bottom: 16px;
+    width: 44px;
+    height: 44px;
+  }
+}
+
+@media (max-width: 380px) {
+  .chain-block {
+    width: 62px;
+    height: 62px;
+    font-size: 0.62rem;
+  }
+
+  .chain-link {
+    width: 10px;
+  }
+
+  .blockchain-visual {
+    padding: 20px 14px;
   }
 }

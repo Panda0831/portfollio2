@@ -10,14 +10,14 @@ export default function Contact() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.message) return;
-    
+
     setIsSubmitting(true);
     // Simulate API request
     await new Promise(resolve => setTimeout(resolve, 1800));
     setIsSubmitting(false);
     setIsSubmitted(true);
     setFormData({ name: '', email: '', message: '' });
-    
+
     // Auto-dismiss success message
     setTimeout(() => setIsSubmitted(false), 5000);
   };
@@ -25,7 +25,7 @@ export default function Contact() {
   return (
     <section id="contact" className="contact-section">
       <div className="section-header">
-        <motion.span 
+        <motion.span
           initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -34,30 +34,30 @@ export default function Contact() {
         >
           04. Prendre Contact
         </motion.span>
-        <motion.h2 
+        <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.1 }}
           className="section-title"
         >
-          Démarrons Un Projet
+          Me Contacter
         </motion.h2>
         <div className="section-line" />
       </div>
 
       <div className="contact-grid">
         {/* Contact info column */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, x: -30 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
           className="contact-info"
         >
-          <h3 className="contact-info-title">Discutons de vos idées</h3>
+          <h3 className="contact-info-title">Échangeons</h3>
           <p className="contact-info-desc">
-            Je suis disponible pour des missions en freelance, des collaborations créatives ou pour échanger sur vos futurs projets web. 
+            Vous pouvez me contacter pour échanger sur un projet académique, une opportunité de stage ou les technologies que j'étudie.
           </p>
 
           <div className="contact-details-list">
@@ -65,7 +65,7 @@ export default function Contact() {
               <Mail className="detail-icon text-cyan" />
               <div>
                 <h4>E-mail</h4>
-                <a href="mailto:denver@example.com" className="interactive">denver@example.com</a>
+                <a href="mailto:fanambymanjaka9@gmail.com" className="interactive">fanambymanjaka9@gmail.com</a>
               </div>
             </div>
 
@@ -73,7 +73,7 @@ export default function Contact() {
               <MapPin className="detail-icon text-purple" />
               <div>
                 <h4>Localisation</h4>
-                <p>Lyon, France (Disponible en distanciel / hybride)</p>
+                <p>Antananarivo, Madagascar</p>
               </div>
             </div>
 
@@ -81,14 +81,14 @@ export default function Contact() {
               <Globe className="detail-icon text-emerald" />
               <div>
                 <h4>Réseaux Sociaux</h4>
-                <p>Retrouvez-moi sur Twitter, LinkedIn et GitHub</p>
+                <p>GitHub, Facebook et LinkedIn</p>
               </div>
             </div>
           </div>
         </motion.div>
 
         {/* Contact form column */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, x: 30 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
@@ -97,12 +97,12 @@ export default function Contact() {
         >
           <AnimatePresence mode="wait">
             {!isSubmitted ? (
-              <motion.form 
+              <motion.form
                 key="form"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                onSubmit={handleSubmit} 
+                onSubmit={handleSubmit}
                 className="contact-form"
               >
                 <div className="form-group">
@@ -147,8 +147,8 @@ export default function Contact() {
                   <div className="input-glow-bar" />
                 </div>
 
-                <button 
-                  type="submit" 
+                <button
+                  type="submit"
                   disabled={isSubmitting}
                   className="btn btn-primary btn-submit interactive"
                 >
@@ -162,7 +162,7 @@ export default function Contact() {
                 </button>
               </motion.form>
             ) : (
-              <motion.div 
+              <motion.div
                 key="success"
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}

@@ -3,32 +3,18 @@ import { Award, Briefcase, Calendar, GraduationCap } from 'lucide-react';
 
 const timelineData = [
   {
-    type: 'work',
+    type: 'education',
     date: '2024 - Présent',
-    title: 'Développeur Frontend & Creative Freelance',
-    company: 'Indépendant',
-    desc: 'Création d\'expériences immersives 3D, intégration d\'animations riches (Framer Motion, GSAP) et optimisation des performances de sites web vitrines haut de gamme.'
-  },
-  {
-    type: 'work',
-    date: '2022 - 2024',
-    title: 'Lead Frontend Developer',
-    company: 'Pixel Studio',
-    desc: 'Encadrement d\'une équipe de 4 développeurs, mise en place d\'architectures React/Next.js modulaires et collaboration étroite avec l\'équipe design UI/UX.'
+    title: 'Licence 3 — Génie logiciel et IA',
+    company: 'ESMIA Innovations',
+    desc: 'Formation en développement web et mobile, programmation, bases de données, conception de systèmes et intelligence artificielle.'
   },
   {
     type: 'education',
-    date: '2020 - 2022',
-    title: 'Master Direction Artistique & Tech',
-    company: 'Gobelins, L\'École de l\'Image',
-    desc: 'Spécialisation dans les technologies web créatives, le design interactif, l\'ergonomie mobile et le prototypage d\'interfaces avancées.'
-  },
-  {
-    type: 'education',
-    date: '2017 - 2020',
-    title: 'Licence Informatique et Multimédia',
-    company: 'Université de Lyon',
-    desc: 'Apprentissage des bases algorithmiques, du développement logiciel, des bases de données et de l\'intégration web standard.'
+    date: 'En cours',
+    title: 'Formation IBM Z Xplore',
+    company: 'IBM',
+    desc: 'Formation en cours autour de l’écosystème IBM Z.'
   }
 ];
 
@@ -86,7 +72,7 @@ export default function About() {
             transition={{ duration: 0.6 }}
             className="about-text"
           >
-            Passionné par l'intersection entre le **code propre** et le **design interactif**, je développe des sites web à forte valeur ajoutée visuelle. Mon but est de transformer des idées conceptuelles en produits numériques fluides et captivants.
+            Étudiant en troisième année en génie logiciel et IA à ESMIA Innovations depuis 2024, je me forme au développement full-stack, aux bases de données et au développement mobile. J'aime apprendre en construisant des projets concrets.
           </motion.p>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -95,7 +81,7 @@ export default function About() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="about-text"
           >
-            Je ne me contente pas d'intégrer des maquettes : je leur insuffle du mouvement, du rythme et de la réactivité pour créer des souvenirs utilisateurs marquants, tout en respectant l'accessibilité et le SEO.
+            Je travaille avec Python et Java, ainsi qu'avec React, PHP/Laravel et Symfony. Je développe aussi des interfaces en HTML, CSS et JavaScript, et j'étudie le machine learning, UML, Merise et la conception de systèmes.
           </motion.p>
 
           <div className="values-grid">
@@ -104,8 +90,8 @@ export default function About() {
               className="value-card glass-panel interactive"
             >
               <Award className="value-icon text-cyan" />
-              <h3>Qualité Pixels</h3>
-              <p>Chaque transition et micro-interaction est peaufinée avec précision.</p>
+              <h3>Apprentissage continu</h3>
+              <p>Je consolide mes compétences à travers des projets personnels et académiques.</p>
             </motion.div>
             
             <motion.div 
@@ -113,15 +99,33 @@ export default function About() {
               className="value-card glass-panel interactive"
             >
               <Briefcase className="value-icon text-purple" />
-              <h3>Orienté Performance</h3>
-              <p>Animations ultra-fluides à 60fps sans surcharger le navigateur.</p>
+              <h3>Développement polyvalent</h3>
+              <p>Web, API, bases de données et applications mobiles font partie de mon parcours.</p>
             </motion.div>
+            <motion.div 
+              whileHover={{ scale: 1.03, y: -5 }}
+              className="value-card glass-panel interactive"
+            >
+              <Award className="value-icon text-cyan" />
+              <h3>Certifications</h3>
+              <p>Cisco Python Essentials 1 et Python Essentials 2.</p>
+            </motion.div>
+          </div>
+
+          <div className="interests-block">
+            <h3>Domaines d’intérêt</h3>
+            <div className="interest-tags">
+              <span>Génie logiciel</span>
+              <span>Intelligence artificielle</span>
+              <span>Architecture logicielle</span>
+              <span>Web & mobile</span>
+            </div>
           </div>
         </div>
 
         {/* Right Column: Timeline Experience */}
         <div className="about-timeline">
-          <h3 className="timeline-section-title">Parcours & Expérience</h3>
+          <h3 className="timeline-section-title">Parcours</h3>
           <motion.div 
             variants={containerVariants}
             initial="hidden"

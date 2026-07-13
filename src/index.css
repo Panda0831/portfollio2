@@ -74,6 +74,10 @@ body {
   cursor: none; /* Hide default cursor for custom cursor experience */
 }
 
+img, svg {
+  max-width: 100%;
+}
+
 a, button, input, textarea {
   cursor: none; /* Make sure we hide default cursor on interactive items */
 }
@@ -213,11 +217,18 @@ section {
 
 /* Hide cursor on mobile/touch screens */
 @media (hover: none) and (pointer: coarse) {
-  body {
+  body, a, button, input, textarea {
     cursor: auto;
   }
   .custom-cursor, .custom-cursor-dot {
     display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  section {
+    min-height: auto;
+    padding: 96px 20px 64px;
   }
 }
 

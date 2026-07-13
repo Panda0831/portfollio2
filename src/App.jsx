@@ -8,9 +8,6 @@ import Hero from './components/Hero'
 import About from './components/About'
 import Projects from './components/Projects'
 import Skills from './components/Skills'
-import Statistics from './components/Statistics'
-import Blog from './components/Blog'
-import Testimonials from './components/Testimonials'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
 import Cursor from './components/Cursor'
@@ -57,9 +54,6 @@ function App() {
               <About />
               <Projects />
               <Skills />
-              <Statistics />
-              <Blog />
-              <Testimonials />
               <Contact />
             </main>
             

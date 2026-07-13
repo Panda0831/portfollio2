@@ -8,9 +8,6 @@ const navItems = [
   { name: 'À Propos', href: '#about' },
   { name: 'Projets', href: '#projects' },
   { name: 'Compétences', href: '#skills' },
-  { name: 'Statistiques', href: '#statistics' },
-  { name: 'Blog', href: '#blog' },
-  { name: 'Témoignages', href: '#testimonials' },
   { name: 'Contact', href: '#contact' }
 ];
 
@@ -68,7 +65,7 @@ export default function Navbar() {
       <div className="navbar-container">
         {/* Logo */}
         <a href="#home" onClick={(e) => handleClick(e, '#home')} className="logo-text interactive">
-          <span>D</span>ENVER<span>.</span>
+          <span>F</span>ANAMBY<span>.</span>
         </a>
 
         {/* Desktop Menu */}

@@ -1,9 +1,9 @@
 import { motion } from 'framer-motion';
-import { ArrowDown, Cpu, Download } from 'lucide-react';
+import { ArrowDown, Cpu } from 'lucide-react';
 
 export default function Hero() {
-  const title = "DEVELOPPEUR CREATIF";
-  
+  const title = "ETUDIANT FULL-STACK";
+
   // Variants for letters reveal
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -43,7 +43,7 @@ export default function Hero() {
 
       <div className="hero-content">
         {/* Top Tagline */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
@@ -52,11 +52,11 @@ export default function Hero() {
           <span className="hero-badge">
             <Cpu size={14} className="badge-icon" /> Portfolio Actif
           </span>
-          <span className="hero-location">Basé à Lyon, France</span>
+          <span className="hero-location">Basé à Antananarivo, Madagascar</span>
         </motion.div>
 
         {/* Main Title (Motion Design Split Text) */}
-        <motion.h1 
+        <motion.h1
           variants={containerVariants}
           initial="hidden"
           animate="visible"
@@ -65,8 +65,8 @@ export default function Hero() {
           {title.split(" ").map((word, wordIndex) => (
             <span key={wordIndex} className="hero-word">
               {word.split("").map((letter, letterIndex) => (
-                <motion.span 
-                  key={letterIndex} 
+                <motion.span
+                  key={letterIndex}
                   variants={letterVariants}
                   className="hero-letter"
                 >
@@ -79,17 +79,17 @@ export default function Hero() {
         </motion.h1>
 
         {/* Subtitle */}
-        <motion.p 
+        <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.8 }}
           className="hero-subtitle"
         >
-          Je conçois des applications web performantes avec des interfaces animées interactives et des expériences 3D mémorables.
+          Étudiant en L3 en génie logiciel et IA à ESMIA Innovations, je développe des applications web et mobiles avec Python, Java, PHP et JavaScript.
         </motion.p>
 
         {/* Code Console / Dashboard Preview (Motion Design) */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, scale: 0.9, y: 40 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 1, delay: 1, ease: [0.16, 1, 0.3, 1] }}
@@ -105,13 +105,13 @@ export default function Hero() {
             <pre>
               <code>
                 <span className="code-keyword">const</span> developer = &#123;<br />
-                &nbsp;&nbsp;name: <span className="code-string">'Denver'</span>,<br />
-                &nbsp;&nbsp;role: <span className="code-string">'Creative Frontend Developer'</span>,<br />
-                &nbsp;&nbsp;skills: [<span className="code-string">'React'</span>, <span className="code-string">'Three.js'</span>, <span className="code-string">'Framer Motion'</span>, <span className="code-string">'CSS3/SCSS'</span>],<br />
-                &nbsp;&nbsp;philosophy: <span className="code-string">'Chaque pixel doit avoir une âme.'</span><br />
+                &nbsp;&nbsp;name: <span className="code-string">'Fanamby Manjaka'</span>,<br />
+                &nbsp;&nbsp;role: <span className="code-string">'Étudiant développeur full-stack'</span>,<br />
+                &nbsp;&nbsp;skills: [<span className="code-string">'Python'</span>, <span className="code-string">'React'</span>, <span className="code-string">'Java'</span>, <span className="code-string">'Laravel'</span>],<br />
+                &nbsp;&nbsp;focus: <span className="code-string">'Génie logiciel, IA et conception de systèmes'</span><br />
                 &#125;;<br /><br />
-                <span className="code-keyword">function</span> <span className="code-func">renderMagic</span>() &#123;<br />
-                &nbsp;&nbsp;console.log(<span className="code-string">`Generating immersive experiences...`</span>);<br />
+                <span className="code-keyword">function</span> <span className="code-func">buildProjects</span>() &#123;<br />
+                &nbsp;&nbsp;console.log(<span className="code-string">`Learning by building...`</span>);<br />
                 &#125;
               </code>
             </pre>
@@ -119,21 +119,21 @@ export default function Hero() {
         </motion.div>
 
         {/* Buttons */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1.2 }}
           className="hero-actions"
         >
-          <a 
-            href="#projects" 
+          <a
+            href="#projects"
             onClick={handleScrollToProjects}
             className="btn btn-primary interactive"
           >
             Voir les Projets <ArrowDown size={18} />
           </a>
-          <a 
-            href="#contact" 
+          <a
+            href="#contact"
             onClick={(e) => {
               e.preventDefault();
               document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
@@ -142,18 +142,11 @@ export default function Hero() {
           >
             Me Contacter
           </a>
-          <a 
-            href="/cv.pdf" 
-            download
-            className="btn btn-secondary interactive"
-          >
-            Télécharger CV <Download size={18} />
-          </a>
         </motion.div>
       </div>
 
       {/* Scroll Down Indicator */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 0.6 }}
         transition={{ delay: 1.8, duration: 1 }}
@@ -161,7 +154,7 @@ export default function Hero() {
         onClick={handleScrollToProjects}
       >
         <span className="scroll-indicator-text">Faites défiler</span>
-        <motion.div 
+        <motion.div
           animate={{ y: [0, 8, 0] }}
           transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
           className="scroll-indicator-mouse"
