@@ -1,37 +1,37 @@
-import { motion } from 'framer-motion';
-import { LayoutGrid, Palette, Terminal } from 'lucide-react';
+import { motion } from "framer-motion";
+import { LayoutGrid, Palette, Terminal } from "lucide-react";
 
 const skillCategories = [
   {
-    title: 'Frontend Development',
+    title: "Frontend Development",
     icon: <LayoutGrid className="category-icon text-cyan" />,
     skills: [
-      { name: 'React / Next.js', level: 90 },
-      { name: 'JavaScript (ES6+)', level: 95 },
-      { name: 'HTML5 / CSS3 / SCSS', level: 95 },
-      { name: 'TailwindCSS', level: 85 }
-    ]
+      { name: "React / Next.js", level: 90 },
+      { name: "JavaScript (ES6+)", level: 95 },
+      { name: "HTML5 / CSS3 / SCSS", level: 95 },
+      { name: "TailwindCSS", level: 85 },
+    ],
   },
   {
-    title: 'Creative Coding',
+    title: "Creative Coding",
     icon: <Palette className="category-icon text-purple" />,
     skills: [
-      { name: 'Framer Motion', level: 90 },
-      { name: 'Three.js / WebGL', level: 75 },
-      { name: 'GSAP Animation', level: 80 },
-      { name: 'Canvas API / SVG', level: 85 }
-    ]
+      { name: "Framer Motion", level: 50 },
+      { name: "Three.js / WebGL", level: 75 },
+      { name: "GSAP Animation", level: 50 },
+      { name: "Canvas API / SVG", level: 85 },
+    ],
   },
   {
-    title: 'Backend & Tools',
+    title: "Backend & Tools",
     icon: <Terminal className="category-icon text-emerald" />,
     skills: [
-      { name: 'Node.js / Express', level: 80 },
-      { name: 'Git & GitHub Workflow', level: 90 },
-      { name: 'SQL & PostgreSQL', level: 75 },
-      { name: 'Figma UI/UX Design', level: 85 }
-    ]
-  }
+      { name: "Node.js / Express", level: 80 },
+      { name: "Git & GitHub Workflow", level: 90 },
+      { name: "SQL & PostgreSQL", level: 75 },
+      { name: "Figma UI/UX Design", level: 85 },
+    ],
+  },
 ];
 
 export default function Skills() {
@@ -40,9 +40,9 @@ export default function Skills() {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.15
-      }
-    }
+        staggerChildren: 0.15,
+      },
+    },
   };
 
   const cardVariants = {
@@ -50,14 +50,14 @@ export default function Skills() {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { type: 'spring', stiffness: 80, damping: 15 }
-    }
+      transition: { type: "spring", stiffness: 80, damping: 15 },
+    },
   };
 
   return (
     <section id="skills" className="skills-section">
       <div className="section-header">
-        <motion.span 
+        <motion.span
           initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -66,7 +66,7 @@ export default function Skills() {
         >
           03. Mon Savoir-Faire
         </motion.span>
-        <motion.h2 
+        <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -78,7 +78,7 @@ export default function Skills() {
         <div className="section-line" />
       </div>
 
-      <motion.div 
+      <motion.div
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
@@ -86,7 +86,7 @@ export default function Skills() {
         className="skills-grid"
       >
         {skillCategories.map((category, catIdx) => (
-          <motion.div 
+          <motion.div
             key={catIdx}
             variants={cardVariants}
             className="skills-category-card glass-panel"
@@ -95,7 +95,7 @@ export default function Skills() {
               {category.icon}
               <h3>{category.title}</h3>
             </div>
-            
+
             <div className="skills-list">
               {category.skills.map((skill, skillIdx) => (
                 <div key={skillIdx} className="skill-item">
@@ -111,11 +111,12 @@ export default function Skills() {
                       transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
                       className="skill-bar-fill"
                       style={{
-                        background: catIdx === 0 
-                          ? 'linear-gradient(90deg, var(--accent-cyan), var(--accent-purple))'
-                          : catIdx === 1
-                          ? 'linear-gradient(90deg, var(--accent-purple), var(--accent-cyan))'
-                          : 'linear-gradient(90deg, var(--accent-emerald), var(--accent-cyan))'
+                        background:
+                          catIdx === 0
+                            ? "linear-gradient(90deg, var(--accent-cyan), var(--accent-purple))"
+                            : catIdx === 1
+                              ? "linear-gradient(90deg, var(--accent-purple), var(--accent-cyan))"
+                              : "linear-gradient(90deg, var(--accent-emerald), var(--accent-cyan))",
                       }}
                     />
                   </div>
