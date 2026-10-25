@@ -1,26 +1,35 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import './index.css'
-import './App.css'
-import { ThemeProvider } from './contexts/ThemeContext'
-import Navbar from './components/Navbar'
-import Hero from './components/Hero'
-import About from './components/About'
-import Projects from './components/Projects'
-import Skills from './components/Skills'
-import Contact from './components/Contact'
-import Footer from './components/Footer'
-import Cursor from './components/Cursor'
-import Loader from './components/Loader'
-import ScrollProgress from './components/ScrollProgress'
-import ScrollToTop from './components/ScrollToTop'
-import Particles from './components/Particles'
+import './index.css';
+import './App.css';
+import Navbar from './components/Navbar';
+import Hero from './components/Hero';
+import About from './components/About';
+import AcademicProgression from './components/AcademicProgression';
+import Projects from './components/Projects';
+import Skills from './components/Skills';
+import Achievements from './components/Achievements';
+import Contact from './components/Contact';
+import Footer from './components/Footer';
+import Cursor from './components/Cursor';
+import Loader from './components/Loader';
+import ScrollProgress from './components/ScrollProgress';
+import ScrollToTop from './components/ScrollToTop';
+import BackgroundGrid from './components/BackgroundGrid';
 
 function App() {
-  const [isLoading, setIsLoading] = useState(true);
+  // Astuce dev : ?instant saute le loader (inactif en production)
+  const [isLoading, setIsLoading] = useState(
+    () => !(import.meta.env.DEV && new URLSearchParams(window.location.search).has('instant'))
+  );
+
+  useEffect(() => {
+    // Ensure premium rich light theme is set
+    document.documentElement.setAttribute('data-theme', 'light');
+  }, []);
 
   return (
-    <ThemeProvider>
+    <div className="portfolio-app">
       <AnimatePresence mode="wait">
         {isLoading ? (
           <Loader key="loader" onComplete={() => setIsLoading(false)} />
@@ -29,44 +38,55 @@ function App() {
             key="content"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="app-main-wrapper"
           >
-            {/* Scroll Progress */}
+            {/* Top Scroll Indicator */}
             <ScrollProgress />
-            
-            {/* Background Elements */}
-            <div className="grid-overlay" />
-            <div className="glow-ambient" />
-            <div className="glow-ambient-2" />
-            
-            {/* Particles */}
-            <Particles />
-            
-            {/* Custom Cursor */}
+
+            {/* Subtle Editorial Background Grid (No generic particles) */}
+            <BackgroundGrid />
+
+            {/* Precision Custom Cursor */}
             <Cursor />
-            
-            {/* Navigation */}
+
+            {/* Header Navigation */}
             <Navbar />
-            
-            {/* Main Content */}
+
+            {/* Main Content Flow */}
             <main>
+              {/* 1. Hero Section */}
               <Hero />
+
+              {/* 2. About / Profile Section */}
               <About />
+
+              {/* 3. Academic Progression (12.45 -> 15.49 Major de Promotion) */}
+              <AcademicProgression />
+
+              {/* 4. Projects (Blockchain Registry, School Management, IT Asset Management) */}
               <Projects />
+
+              {/* 5. Skills (Languages, Backend, Frontend & Mobile, Data Engineering, Tools) */}
               <Skills />
+
+              {/* 6. Achievements & Hackathons */}
+              <Achievements />
+
+              {/* 7. Contact & Internship Availability */}
               <Contact />
             </main>
-            
-            {/* Footer */}
+
+            {/* Editorial Footer */}
             <Footer />
-            
-            {/* Scroll to Top */}
+
+            {/* Floating Back to Top */}
             <ScrollToTop />
           </motion.div>
         )}
       </AnimatePresence>
-    </ThemeProvider>
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;

@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
-import ThemeToggle from './ThemeToggle';
+import { Menu, X, ArrowUpRight } from 'lucide-react';
 
 const navItems = [
-  { name: 'Accueil', href: '#home' },
-  { name: 'À Propos', href: '#about' },
-  { name: 'Projets', href: '#projects' },
-  { name: 'Compétences', href: '#skills' },
-  { name: 'Contact', href: '#contact' }
+  { label: 'Profil', number: '01', href: '#about' },
+  { label: 'Progression', number: '02', href: '#academic' },
+  { label: 'Projets', number: '03', href: '#projects' },
+  { label: 'Compétences', number: '04', href: '#skills' },
+  { label: 'Distinctions', number: '05', href: '#achievements' },
+  { label: 'Contact', number: '06', href: '#contact' }
 ];
 
 export default function Navbar() {
@@ -16,40 +16,39 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  // Monitor scroll to update active section and navbar background
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+      setScrolled(window.scrollY > 40);
 
-      const sections = navItems.map(item => item.href.substring(1));
-      const scrollPosition = window.scrollY + 200;
+      const sectionIds = ['home', 'about', 'academic', 'projects', 'skills', 'achievements', 'contact'];
+      const scrollPosition = window.scrollY + 220;
 
-      for (const section of sections) {
-        const el = document.getElementById(section);
+      for (const id of sectionIds) {
+        const el = document.getElementById(id);
         if (el) {
           const top = el.offsetTop;
           const height = el.offsetHeight;
           if (scrollPosition >= top && scrollPosition < top + height) {
-            setActiveSection(section);
+            setActiveSection(id);
             break;
           }
         }
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleClick = (e, href) => {
+  const handleNavClick = (e, href) => {
     e.preventDefault();
     setIsOpen(false);
-    const targetId = href.substring(1);
+    const targetId = href.replace('#', '');
     const element = document.getElementById(targetId);
     if (element) {
-      const offsetTop = element.offsetTop;
+      const top = element.offsetTop - 80;
       window.scrollTo({
-        top: offsetTop - 80,
+        top: top >= 0 ? top : 0,
         behavior: 'smooth'
       });
     }
@@ -57,79 +56,110 @@ export default function Navbar() {
 
   return (
     <motion.header
-      initial={{ y: -100, opacity: 0 }}
+      initial={{ y: -30, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       className={`navbar-header ${scrolled ? 'scrolled' : ''}`}
     >
       <div className="navbar-container">
-        {/* Logo */}
-        <a href="#home" onClick={(e) => handleClick(e, '#home')} className="logo-text interactive">
-          <span>F</span>ANAMBY<span>.</span>
+        {/* Brand / Name */}
+        <a
+          href="#home"
+          onClick={(e) => handleNavClick(e, '#home')}
+          className="navbar-brand interactive"
+        >
+          <span className="brand-name">FANAMBY MANJAKA</span>
+          <span className="brand-meta">L3 GENIE LOGICIEL · DATA</span>
         </a>
 
-        {/* Desktop Menu */}
-        <nav className="desktop-nav">
+        
+
+        {/* Desktop Nav */}
+        <nav className="desktop-nav" aria-label="Main Navigation">
           {navItems.map((item) => {
-            const sectionName = item.href.substring(1);
-            const isActive = activeSection === sectionName;
+            const sectionId = item.href.replace('#', '');
+            const isActive = activeSection === sectionId;
             return (
               <a
-                key={item.name}
+                key={item.number}
                 href={item.href}
-                onClick={(e) => handleClick(e, item.href)}
+                onClick={(e) => handleNavClick(e, item.href)}
                 className={`nav-link interactive ${isActive ? 'active' : ''}`}
               >
-                {item.name}
+                <span className="nav-number">{item.number}</span>
+                <span className="nav-label">{item.label}</span>
                 {isActive && (
-                  <motion.div
-                    layoutId="activePill"
-                    className="nav-active-pill"
-                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                  <motion.span
+                    layoutId="navbarActiveIndicator"
+                    className="nav-active-line"
+                    transition={{ type: 'spring', stiffness: 350, damping: 30 }}
                   />
                 )}
               </a>
             );
           })}
-          <ThemeToggle />
         </nav>
 
-        {/* Mobile Toggle */}
-        <button 
-          onClick={() => setIsOpen(!isOpen)} 
-          className="mobile-toggle-btn interactive"
-          aria-label="Toggle menu"
-        >
-          {isOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+        {/* Direct Action Link */}
+        <div className="navbar-cta-group">
+          <a
+            href="#contact"
+            onClick={(e) => handleNavClick(e, '#contact')}
+            className="navbar-cta-btn interactive"
+          >
+            <span>Me Contacter</span>
+            <ArrowUpRight size={14} className="cta-icon" />
+          </a>
+
+          {/* Mobile Menu Toggle */}
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="mobile-toggle-btn interactive"
+            aria-label="Toggle Navigation Menu"
+            aria-expanded={isOpen}
+          >
+            {isOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </div>
       </div>
 
-      {/* Mobile Drawer Menu */}
+      {/* Mobile Drawer */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3, ease: 'easeInOut' }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
             className="mobile-drawer"
           >
-            <div className="mobile-drawer-content">
-              {navItems.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  onClick={(e) => handleClick(e, item.href)}
-                  className={`mobile-nav-link interactive ${
-                    activeSection === item.href.substring(1) ? 'active' : ''
-                  }`}
-                >
-                  {item.name}
-                </a>
-              ))}
-              <div className="mobile-theme-toggle">
-                <ThemeToggle />
+            <div className="mobile-drawer-inner">
+              <div className="mobile-drawer-status">
+                <span className="status-pulse-dot" />
+                <span>Disponible pour stage de fin d'études dès le 30 Décembre 2026</span>
               </div>
+              <div className="mobile-nav-links">
+                {navItems.map((item) => (
+                  <a
+                    key={item.number}
+                    href={item.href}
+                    onClick={(e) => handleNavClick(e, item.href)}
+                    className={`mobile-nav-link interactive ${
+                      activeSection === item.href.replace('#', '') ? 'active' : ''
+                    }`}
+                  >
+                    <span className="mobile-nav-num">{item.number}</span>
+                    <span className="mobile-nav-title">{item.label}</span>
+                  </a>
+                ))}
+              </div>
+              <a
+                href="#contact"
+                onClick={(e) => handleNavClick(e, '#contact')}
+                className="mobile-cta-btn interactive"
+              >
+                Initier un échange <ArrowUpRight size={16} />
+              </a>
             </div>
           </motion.div>
         )}
