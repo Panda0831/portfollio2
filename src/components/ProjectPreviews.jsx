@@ -40,7 +40,6 @@ export function BlockchainPreview() {
           <span>Blockchain Node · Preuve de Travail</span>
         </div>
         <div className="widget-status">
-          <span className="widget-dot green" />
           <span>Consensus Actif</span>
         </div>
       </div>

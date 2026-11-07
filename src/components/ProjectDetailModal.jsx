@@ -1,12 +1,54 @@
+import { useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, GitBranch, CheckCircle2, Layers, Database, Shield } from 'lucide-react';
 
 export default function ProjectDetailModal({ project, isOpen, onClose }) {
-  if (!isOpen || !project) return null;
+  const dialogRef = useRef(null);
+
+  useEffect(() => {
+    if (!isOpen || !project) return undefined;
+
+    const previousOverflow = document.body.style.overflow;
+    const previouslyFocused = document.activeElement;
+    document.body.style.overflow = 'hidden';
+    dialogRef.current?.querySelector('button, a')?.focus();
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        onClose();
+        return;
+      }
+      if (event.key !== 'Tab' || !dialogRef.current) return;
+      const focusable = dialogRef.current.querySelectorAll('a[href], button:not([disabled])');
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last?.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first?.focus();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener('keydown', handleKeyDown);
+      previouslyFocused?.focus?.();
+    };
+  }, [isOpen, onClose, project]);
 
   return (
     <AnimatePresence>
-      <div className="modal-backdrop" onClick={onClose}>
+      {isOpen && project && <motion.div
+        className="modal-backdrop"
+        onClick={onClose}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        role="presentation"
+      >
         <motion.div
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -14,12 +56,17 @@ export default function ProjectDetailModal({ project, isOpen, onClose }) {
           transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
           className="modal-content glass-panel"
           onClick={(e) => e.stopPropagation()}
+          ref={dialogRef}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="project-dialog-title"
+          tabIndex={-1}
         >
           {/* Header */}
           <div className="modal-header">
             <div>
               <span className="modal-category">{project.category}</span>
-              <h3 className="modal-title">{project.title}</h3>
+              <h3 className="modal-title" id="project-dialog-title">{project.title}</h3>
             </div>
             <button onClick={onClose} className="modal-close-btn interactive" aria-label="Fermer la modal">
               <X size={20} />
@@ -76,7 +123,7 @@ export default function ProjectDetailModal({ project, isOpen, onClose }) {
             </button>
           </div>
         </motion.div>
-      </div>
+      </motion.div>}
     </AnimatePresence>
   );
 }

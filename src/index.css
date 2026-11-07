@@ -1,64 +1,106 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,300..600&family=Inter:wght@350;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+:root,
+[data-theme='light'] {
+  /* Native system fonts keep the type crisp and fast on Apple platforms. */
+  --font-display: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', Menlo, Monaco, Consolas, monospace;
 
-:root, [data-theme="light"] {
-  /* Typographie : serif éditorial pour les titres, sans neutre pour le corps,
-     mono uniquement en petites étiquettes techniques. */
-  --font-display: 'Fraunces', 'Iowan Old Style', Georgia, serif;
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  --font-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', Menlo, Consolas, monospace;
-
-  /* Papier chaud & encre — palette éditoriale posée, pas de fluo */
-  --bg: #faf9f6;                 /* Ivoire papier */
-  --bg-surface: #f1efe9;         /* Encarts légèrement plus sombres */
+  /* Apple-inspired palette (light) */
+  --bg: #f5f5f7;
+  --bg-elevated: #ffffff;
+  --bg-surface: #fbfbfd;
   --bg-card: #ffffff;
   --bg-card-hover: #ffffff;
-  --bg-card-active: #f4f2ee;
-  --bg-overlay: rgba(250, 249, 246, 0.92);
+  --bg-card-active: #f5f5f7;
+  --bg-overlay: rgba(245, 245, 247, 0.72);
 
-  /* Filets */
-  --border-subtle: #e7e4dd;
-  --border-medium: #d8d4cb;
-  --border-strong: #b8b2a6;
-  --border-cyan: rgba(14, 116, 144, 0.32);
+  --border-subtle: rgba(0, 0, 0, 0.08);
+  --border-medium: rgba(0, 0, 0, 0.14);
+  --border-strong: rgba(0, 0, 0, 0.22);
+  --border-cyan: rgba(0, 113, 227, 0.22);
 
-  /* Texte : encre pierre chaude */
-  --text-primary: #1c1917;
-  --text-secondary: #45403a;
-  --text-muted: #78726a;
-  --text-faint: #a8a29e;
+  --text-primary: #1d1d1f;
+  --text-secondary: #6e6e73;
+  --text-muted: #86868b;
+  --text-faint: #aeaeb2;
 
-  /* Accent unique : bleu pétrole profond, discret mais présent */
-  --accent-cyan: #0e7490;
-  --accent-cyan-dark: #155e75;
-  --accent-cyan-subtle: rgba(14, 116, 144, 0.07);
-  --accent-cyan-glow: rgba(14, 116, 144, 0.12);
+  /* Primary accent — Apple blue (kept as --accent-cyan for compatibility) */
+  --accent-cyan: #0071e3;
+  --accent-cyan-dark: #0077ed;
+  --accent-cyan-subtle: rgba(0, 113, 227, 0.08);
+  --accent-cyan-glow: rgba(0, 113, 227, 0.18);
 
-  /* Accents secondaires (réservés : disponibilité & distinctions) */
-  --accent-emerald: #0f766e;
-  --accent-emerald-subtle: rgba(15, 118, 110, 0.08);
-  --accent-gold: #b45309;
-  --accent-gold-subtle: rgba(180, 83, 9, 0.1);
+  --accent-emerald: #248a3d;
+  --accent-emerald-subtle: rgba(36, 138, 61, 0.1);
+  --accent-gold: #b25000;
+  --accent-gold-subtle: rgba(178, 80, 0, 0.1);
 
-  /* Ombres douces, quasi invisibles — la matière suffit */
-  --shadow-subtle: 0 1px 2px rgba(28, 25, 23, 0.04), 0 3px 10px rgba(28, 25, 23, 0.03);
-  --shadow-card: 0 1px 3px rgba(28, 25, 23, 0.04), 0 1px 2px rgba(28, 25, 23, 0.02);
-  --shadow-hover: 0 10px 28px rgba(28, 25, 23, 0.07), 0 2px 6px rgba(28, 25, 23, 0.03);
+  --shadow-subtle: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.04);
+  --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.08);
+  --shadow-2xl: 0 24px 60px rgba(0, 0, 0, 0.12);
 
-  --container-max: 1240px;
-
-  /* Coins affirment la structure, sans arrondir à l'excès */
-  --radius-xs: 4px;
-  --radius-sm: 8px;
-  --radius-md: 10px;
-  --radius-lg: 14px;
-  --radius-xl: 18px;
+  --container-max: 1120px;
+  --radius-xs: 8px;
+  --radius-sm: 12px;
+  --radius-md: 18px;
+  --radius-lg: 24px;
+  --radius-xl: 30px;
   --radius-full: 9999px;
 
-  /* Mouvement : une seule courbe, douce sur l'entrée, amortie sur l'arrête */
-  --ease-swiss: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-swiss: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --ease-apple: cubic-bezier(0.28, 0.11, 0.32, 1);
+  --nav-bg: rgba(245, 245, 247, 0.72);
+  --nav-bg-scrolled: rgba(245, 245, 247, 0.8);
+  --nav-border: rgba(0, 0, 0, 0.1);
 
   color-scheme: light;
 }
+
+[data-theme='dark'] {
+  --bg: #000000;
+  --bg-elevated: #1d1d1f;
+  --bg-surface: #161617;
+  --bg-card: #1c1c1e;
+  --bg-card-hover: #2c2c2e;
+  --bg-card-active: #2c2c2e;
+  --bg-overlay: rgba(29, 29, 31, 0.72);
+
+  --border-subtle: rgba(255, 255, 255, 0.1);
+  --border-medium: rgba(255, 255, 255, 0.16);
+  --border-strong: rgba(255, 255, 255, 0.24);
+  --border-cyan: rgba(41, 151, 255, 0.32);
+
+  --text-primary: #f5f5f7;
+  --text-secondary: #a1a1a6;
+  --text-muted: #86868b;
+  --text-faint: #636366;
+
+  --accent-cyan: #2997ff;
+  --accent-cyan-dark: #409cff;
+  --accent-cyan-subtle: rgba(41, 151, 255, 0.14);
+  --accent-cyan-glow: rgba(41, 151, 255, 0.24);
+
+  --accent-emerald: #30d158;
+  --accent-emerald-subtle: rgba(48, 209, 88, 0.14);
+  --accent-gold: #ff9f0a;
+  --accent-gold-subtle: rgba(255, 159, 10, 0.14);
+
+  --shadow-subtle: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-card: 0 2px 16px rgba(0, 0, 0, 0.35);
+  --shadow-hover: 0 16px 48px rgba(0, 0, 0, 0.5);
+  --shadow-2xl: 0 30px 80px rgba(0, 0, 0, 0.6);
+
+  --nav-bg: rgba(29, 29, 31, 0.72);
+  --nav-bg-scrolled: rgba(29, 29, 31, 0.82);
+  --nav-border: rgba(255, 255, 255, 0.12);
+
+  color-scheme: dark;
+}
+
+/* The portfolio uses the requested light appearance regardless of OS preference. */
+html, :root { color-scheme: light; }
+[data-theme='dark'] { color-scheme: light; }
 
 /* Global Reset */
 *, *::before, *::after {
@@ -81,79 +123,42 @@ body {
   overflow-x: hidden;
   background-color: var(--bg);
   color: var(--text-primary);
-  line-height: 1.6;
-  font-size: 16px;
+  line-height: 1.47059;
+  font-size: 17px;
+  letter-spacing: -0.022em;
   cursor: default;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Pointeurs ergonomiques */
-a, button, [role="button"], .interactive {
-  cursor: pointer;
-}
+a, button, [role="button"], .interactive { cursor: pointer; }
+input, textarea { cursor: text; }
+img, svg, video { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { background: none; border: none; font: inherit; color: inherit; outline: none; }
+input, textarea, select { font: inherit; color: inherit; outline: none; }
 
-input, textarea {
-  cursor: text;
-}
-
-img, svg, video {
-  display: block;
-  max-width: 100%;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-button {
-  background: none;
-  border: none;
-  font: inherit;
-  color: inherit;
-  outline: none;
-}
-
-input, textarea, select {
-  font: inherit;
-  color: inherit;
-  outline: none;
-}
-
-/* Focus visible propre — le clavier compte autant que la souris */
 :focus-visible {
   outline: 2px solid var(--accent-cyan);
-  outline-offset: 2px;
-  border-radius: 2px;
+  outline-offset: 3px;
+  border-radius: 6px;
 }
 
-/* Selection sobre */
 ::selection {
-  background-color: rgba(14, 116, 144, 0.16);
+  background-color: var(--accent-cyan-subtle);
   color: var(--text-primary);
 }
 
-/* Scrollbar discret */
-::-webkit-scrollbar {
-  width: 6px;
-}
-::-webkit-scrollbar-track {
-  background: var(--bg);
-}
-::-webkit-scrollbar-thumb {
-  background: rgba(28, 25, 23, 0.14);
-  border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(14, 116, 144, 0.45);
-}
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-medium); border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
 
-/* Carte de base : matière sobre, filets fins */
 .glass-panel {
   background-color: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-card);
-  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  transition: border-color 0.3s var(--ease-apple), box-shadow 0.3s var(--ease-apple), transform 0.3s var(--ease-apple), background-color 0.3s ease;
 }
 
 .glass-panel:hover {
@@ -161,17 +166,11 @@ input, textarea, select {
   box-shadow: var(--shadow-hover);
 }
 
-.text-cyan {
-  color: var(--accent-cyan);
-}
+.text-cyan { color: var(--accent-cyan); }
+.highlight-cyan { color: var(--accent-cyan) !important; font-weight: 600; }
 
-.highlight-cyan {
-  color: var(--accent-cyan) !important;
-  font-weight: 600;
-}
-
-/* Respect des préférences utilisateur : pas d'animation forcée */
 @media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;

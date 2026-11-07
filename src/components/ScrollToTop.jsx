@@ -36,7 +36,7 @@ export default function ScrollToTop() {
           whileTap={{ scale: 0.9 }}
           onClick={scrollToTop}
           className="floating-scroll-top interactive"
-          aria-label="Scroll to top"
+          aria-label="Retour en haut de page"
         >
           <ArrowUp size={24} />
         </motion.button>

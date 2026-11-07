@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Mail, Phone, MapPin, Send, CheckCircle, Copy, Check, GitBranch, Calendar, ArrowUpRight } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, Copy, Check, GitBranch, Calendar, ArrowUpRight } from 'lucide-react';
 
 const LinkedinIcon = ({ size = 16, className = "" }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
@@ -12,40 +11,43 @@ const LinkedinIcon = ({ size = 16, className = "" }) => (
 
 export default function Contact() {
   const [formData, setFormData] = useState({ name: '', email: '', subject: 'Proposition de Stage', message: '' });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [draftNotice, setDraftNotice] = useState('');
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [copiedPhone, setCopiedPhone] = useState(false);
 
   const emailAddress = 'fanambymanjaka9@gmail.com';
   const phoneNumber = '038 72 143 62';
 
-  const handleCopyEmail = (e) => {
+  const handleCopyEmail = async (e) => {
     e.preventDefault();
-    navigator.clipboard.writeText(emailAddress);
-    setCopiedEmail(true);
-    setTimeout(() => setCopiedEmail(false), 2500);
+    try {
+      await navigator.clipboard.writeText(emailAddress);
+      setCopiedEmail(true);
+      window.setTimeout(() => setCopiedEmail(false), 2500);
+    } catch {
+      window.location.href = `mailto:${emailAddress}`;
+    }
   };
 
-  const handleCopyPhone = (e) => {
+  const handleCopyPhone = async (e) => {
     e.preventDefault();
-    navigator.clipboard.writeText(phoneNumber.replace(/\s+/g, ''));
-    setCopiedPhone(true);
-    setTimeout(() => setCopiedPhone(false), 2500);
+    try {
+      await navigator.clipboard.writeText(phoneNumber.replace(/\s+/g, ''));
+      setCopiedPhone(true);
+      window.setTimeout(() => setCopiedPhone(false), 2500);
+    } catch {
+      window.location.href = `tel:${phoneNumber.replace(/\s+/g, '')}`;
+    }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.message) return;
 
-    setIsSubmitting(true);
-    // Simulate responsive submission
-    await new Promise((resolve) => setTimeout(resolve, 1400));
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-    setFormData({ name: '', email: '', subject: 'Proposition de Stage', message: '' });
-
-    setTimeout(() => setIsSubmitted(false), 6000);
+    const subject = encodeURIComponent(`${formData.subject} — ${formData.name}`);
+    const body = encodeURIComponent(`${formData.message}\n\n${formData.name}\n${formData.email}`);
+    setDraftNotice('Votre application e-mail va s’ouvrir avec le message prérempli.');
+    window.location.href = `mailto:${emailAddress}?subject=${subject}&body=${body}`;
   };
 
   return (
@@ -69,8 +71,7 @@ export default function Contact() {
 
         {/* High-Impact Availability Banner */}
         <div className="contact-internship-banner glass-panel">
-          <div className="banner-pulse-wrapper">
-            <span className="pulse-circle" />
+          <div className="banner-kicker-row">
             <span className="pulse-text">STAGE DE FIN D'ÉTUDES · 6 MOIS</span>
           </div>
           <h3 className="banner-title">
@@ -99,7 +100,7 @@ export default function Contact() {
                     <span className="item-label">ADRESSE COURRIEL</span>
                     <a href={`mailto:${emailAddress}`} className="item-value">{emailAddress}</a>
                   </div>
-                  <button onClick={handleCopyEmail} className="copy-action-btn interactive" title="Copier l'email">
+                  <button type="button" onClick={handleCopyEmail} className="copy-action-btn interactive" title="Copier l'e-mail" aria-label={copiedEmail ? 'E-mail copié' : "Copier l'adresse e-mail"}>
                     {copiedEmail ? <Check size={16} className="text-cyan" /> : <Copy size={16} />}
                   </button>
                 </div>
@@ -111,7 +112,7 @@ export default function Contact() {
                     <span className="item-label">TÉLÉPHONE</span>
                     <a href={`tel:${phoneNumber.replace(/\s+/g, '')}`} className="item-value">{phoneNumber}</a>
                   </div>
-                  <button onClick={handleCopyPhone} className="copy-action-btn interactive" title="Copier le numéro">
+                  <button type="button" onClick={handleCopyPhone} className="copy-action-btn interactive" title="Copier le numéro" aria-label={copiedPhone ? 'Numéro copié' : 'Copier le numéro de téléphone'}>
                     {copiedPhone ? <Check size={16} className="text-cyan" /> : <Copy size={16} />}
                   </button>
                 </div>
@@ -172,9 +173,7 @@ export default function Contact() {
               <span className="card-kicker">Message direct</span>
               <h4 className="card-title">Formulaire de contact direct</h4>
               
-              <AnimatePresence mode="wait">
-                {!isSubmitted ? (
-                  <form onSubmit={handleSubmit} className="swiss-contact-form">
+              <form onSubmit={handleSubmit} className="swiss-contact-form">
                     <div className="form-row">
                       <div className="form-group">
                         <label htmlFor="contact-name" className="form-label">
@@ -242,48 +241,18 @@ export default function Contact() {
                     <div className="form-footer-action">
                       <button
                         type="submit"
-                        disabled={isSubmitting}
                         className="btn-swiss-primary btn-submit interactive"
                       >
-                        {isSubmitting ? (
-                          <>
-                            <span className="spinner-dot" />
-                            <span>Transmission en cours...</span>
-                          </>
-                        ) : (
-                          <>
-                            <span>Transmettre mon message</span>
-                            <Send size={16} />
-                          </>
-                        )}
+                        <span>Préparer mon e-mail</span>
+                        <Send size={16} />
                       </button>
 
                       <span className="form-privacy-note">
                         Je réponds en général sous 24 à 48 heures ouvrées.
                       </span>
                     </div>
-                  </form>
-                ) : (
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0 }}
-                    className="form-success-box"
-                  >
-                    <CheckCircle size={48} className="text-cyan success-icon" />
-                    <h4 className="success-heading">Message bien transmis !</h4>
-                    <p className="success-text">
-                      Merci pour votre intérêt. J'ai bien reçu votre message et je reviendrai vers vous très rapidement.
-                    </p>
-                    <button
-                      onClick={() => setIsSubmitted(false)}
-                      className="btn-swiss-secondary interactive"
-                    >
-                      Envoyer un autre message
-                    </button>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+        {draftNotice && <p className="form-privacy-note" role="status" aria-live="polite">{draftNotice}</p>}
+              </form>
             </div>
           </div>
 

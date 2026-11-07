@@ -1,96 +1,64 @@
-import { motion } from 'framer-motion';
-import { useState, useEffect } from 'react';
-import videoSrc from '../assets/MOTION.mp4';
+import { useEffect, useRef, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import motionVideo from '../assets/fanamby_motion.mp4';
+
+const FALLBACK_MS = 2400;
 
 export default function Loader({ onComplete }) {
-  const [loaded, setLoaded] = useState(false);
-  const [reducedMotion, setReducedMotion] = useState(false);
+  const [done, setDone] = useState(false);
+  const finishedRef = useRef(false);
+
+  const finish = () => {
+    if (finishedRef.current) return;
+    finishedRef.current = true;
+    setDone(true);
+  };
 
   useEffect(() => {
-    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-    setReducedMotion(mq.matches);
-    const listener = mq => setReducedMotion(mq.matches);
-    mq.addEventListener('change', listener);
-    return () => mq.removeEventListener('change', listener);
+    const timer = window.setTimeout(finish, FALLBACK_MS);
+    return () => window.clearTimeout(timer);
   }, []);
 
-  useEffect(() => {
-    if (reducedMotion) {
-      setLoaded(true);
-      if (onComplete) onComplete();
-      return;
-    }
-    const video = document.querySelector('#hero-avatar-video');
-    if (!video) return;
-    video.addEventListener('canplay', () => {
-      const duration = video.duration * 1000 - 4000;
-      const timer = setTimeout(() => {
-        setLoaded(true);
-        if (onComplete) onComplete();
-      }, duration);
-      return () => clearTimeout(timer);
-    });
-    video.currentTime = 0;
-    video.play();
-    return () => {
-      video.pause();
-    };
-  }, [reducedMotion]);
-
   return (
-    <motion.div
-      initial={{ opacity: 1, exit: { opacity: 0 } }}
-      className="loader-overlay"
-    >
-      <div className="video-frame">
-        <div className="corner-accent tl" />
-        <div className="corner-accent tr" />
-        <div className="corner-accent bl" />
-        <div className="corner-accent br" />
-        <video
-          id="hero-avatar-video"
-          src={videoSrc}
-          type="video/mp4"
-          muted
-          playsInline
-          loop
-          className="hero-avatar-video"
-          style={{ display: reducedMotion ? 'none' : 'block' }}
-        />
-      </div>
-      {!reducedMotion && (
-        <div className="loader-progress-overlay">
-          <div
-            className="loader-progress-fill"
-            style={{ width: loaded ? '100%' : '0%' }}
-          />
-        </div>
-      )}
-      {loaded && (
+    <AnimatePresence onExitComplete={onComplete}>
+      {!done && (
         <motion.div
-          className="loader-complete"
+          className="loader-overlay"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          exit={{ opacity: 0, y: -12, filter: 'blur(8px)' }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          aria-label="Chargement"
+          role="status"
         >
-          <motion.p
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.3, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-            className="loader-complete-text"
+          <motion.div
+            className="loader-video-shell"
+            initial={{ opacity: 0, y: 22, scale: 0.94 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 1, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
           >
-            Fanamby Manjaka · Fullstack & Data Engineering
-          </motion.p>
-          <motion.p
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.3, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="loader-complete-sub"
-          >
-            Stage de fin d'études · 30 décembre 2026
-          </motion.p>
+            <div className="video-frame loader-video-frame">
+              <motion.div
+                className="loader-video-reveal"
+                initial={{ scale: 1.08 }}
+                animate={{ scale: 1 }}
+                transition={{ duration: 1.8, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
+              >
+              <video
+                src={motionVideo}
+                autoPlay
+                muted
+                playsInline
+                preload="metadata"
+                onEnded={finish}
+                onError={finish}
+                className="loader-video"
+              />
+              </motion.div>
+            </div>
+          </motion.div>
         </motion.div>
       )}
-    </motion.div>
+    </AnimatePresence>
   );
 }

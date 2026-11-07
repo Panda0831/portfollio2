@@ -1,19 +1,20 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { GitBranch, ArrowUpRight, Blocks, Database, Server, Info } from 'lucide-react';
+import { ArrowUpRight, ChevronRight, Code2 } from 'lucide-react';
 import ProjectDetailModal from './ProjectDetailModal';
 import { BlockchainPreview, SchoolManagementPreview, ITAssetPreview } from './ProjectPreviews';
+
+const ease = [0.28, 0.11, 0.32, 1];
 
 const projects = [
   {
     id: 'blockchain-registry',
-    title: 'Registre Blockchain décentralisé',
-    category: 'Systèmes distribués · Suivi de transactions · Django',
+    title: 'Registre blockchain décentralisé',
+    category: 'Systèmes distribués · Django · React · Expo',
     previewType: 'blockchain',
-    badge: 'Projet Fondamental',
-    icon: <Blocks size={18} className="text-cyan" />,
+    problem: 'Comprendre et implémenter les mécanismes de confiance d’un registre distribué, sans dépendre d’une bibliothèque blockchain abstraite.',
     description:
-      'Système de suivi de transactions basé sur la blockchain : noyau Python implémenté from scratch (hash SHA-256, Proof of Work) et exposé via un backend Django, un frontend React et une application mobile Expo.',
+      'Système de suivi de transactions : noyau Python from scratch (hash SHA-256, Proof of Work), exposé via Django, un frontend React et une application mobile Expo.',
     longDescription:
       'Développée dans une démarche d’apprentissage approfondi des protocoles décentralisés. Sans s’appuyer sur des bibliothèques tierces abstraites, chaque élément (structure de bloc, calcul de hash, pool de transactions en mémoire et validation de la chaîne) a été implémenté à la main avec une suite de tests unitaires.',
     architecture:
@@ -23,20 +24,20 @@ const projects = [
       'Chaînage cryptographique SHA-256 avec calcul du nonce déterministe',
       'Détection instantanée et rejet de toute altération de l’historique des blocs',
       'API REST (Django) pour inspecter la chaîne et diffuser des transactions',
-      'Application mobile Expo pour consulter le registre'
+      'Application mobile Expo pour consulter le registre',
     ],
-    tech: ['Django (API REST)', 'React', 'Expo (React Native)', 'Python 3', 'SHA-256'],
-    github: 'https://github.com/Panda0831/blockhain'
+    tech: ['Python 3', 'Django (API REST)', 'React', 'Expo (React Native)', 'SHA-256'],
+    github: 'https://github.com/Panda0831/blockhain',
+    accent: 'blue',
   },
   {
     id: 'school-management',
     title: 'Système de gestion d’établissement',
-    category: 'Fullstack · Architecture moderne TypeScript',
+    category: 'Fullstack · TypeScript · Prisma · PostgreSQL',
     previewType: 'school',
-    badge: 'Système d’Information',
-    icon: <Database size={18} className="text-cyan" />,
+    problem: 'Modéliser fidèlement les règles académiques (coefficients, délibérations, bulletins) avec intégrité des données et traçabilité.',
     description:
-      'Plateforme de gestion académique complète : gestion des cursus, calcul automatisé des moyennes semestrielles pondérées, suivi des délibérations et génération sécurisée de relevés de notes.',
+      'Plateforme académique complète : gestion des cursus, calcul automatisé des moyennes pondérées, suivi des délibérations et génération sécurisée de relevés de notes.',
     longDescription:
       'Conçu pour modéliser fidèlement les règles d’un établissement d’enseignement supérieur : gestion des promotions, coefficients de matières, clôture semestrielle et génération automatisée des bulletins officiels au format PDF.',
     architecture:
@@ -45,20 +46,20 @@ const projects = [
       'Schéma relationnel normalisé (plus de 15 tables) sans redondance',
       'Transactions ACID strictes lors des délibérations et calculs de rangs',
       'Contrôle d’accès basé sur les rôles (Admin, Enseignants, Étudiants)',
-      'Export PDF des bulletins avec signature d’intégrité numérique'
+      'Export PDF des bulletins avec signature d’intégrité numérique',
     ],
     tech: ['TypeScript', 'Prisma ORM', 'React', 'PostgreSQL'],
-    github: 'https://github.com/Panda0831'
+    github: 'https://github.com/Panda0831',
+    accent: 'neutral',
   },
   {
     id: 'it-asset-management',
-    title: 'Gestion de parc informatique (S3)',
-    category: 'Infrastructure & Suivi · PHP · Tailwind CSS',
+    title: 'Gestion de parc informatique',
+    category: 'Infrastructure · PHP · Tailwind CSS · MySQL',
     previewType: 'it-asset',
-    badge: 'Projet de Semestre 3',
-    icon: <Server size={18} className="text-cyan" />,
+    problem: 'Suivre le cycle de vie du matériel informatique, les affectations et les interventions sans perdre l’historique du parc.',
     description:
-      'Outil de suivi et d’inventaire du matériel informatique avec interface moderne : cycle de vie des équipements, affectations, statuts et historique des interventions.',
+      'Outil d’inventaire et de suivi : équipements, statuts, affectations, historique des interventions et tableaux de bord réactifs.',
     longDescription:
       'Destiné à rationaliser la gestion du parc informatique : identification du matériel, suivi des équipements affectés, historique des interventions techniques et projection des coûts de renouvellement.',
     architecture:
@@ -67,148 +68,123 @@ const projects = [
       'Traçabilité complète des postes et serveurs par numéros de série et statuts',
       'Calcul automatique des amortissements comptables du matériel',
       'Suivi des tickets d’incidents techniques et des contrats de maintenance',
-      'Tableaux de bord réactifs pour visualiser l’état global du parc'
+      'Tableaux de bord réactifs pour visualiser l’état global du parc',
     ],
     tech: ['PHP', 'Tailwind CSS', 'MySQL', 'Architecture MVC'],
-    github: 'https://github.com/Panda0831'
-  }
+    github: 'https://github.com/Panda0831',
+    accent: 'graphite',
+  },
 ];
+
+function ProjectVisual({ type }) {
+  if (type === 'blockchain') return <BlockchainPreview />;
+  if (type === 'school') return <SchoolManagementPreview />;
+  if (type === 'it-asset') return <ITAssetPreview />;
+  return null;
+}
 
 export default function Projects() {
   const [activeModalProject, setActiveModalProject] = useState(null);
 
-  const renderProjectPreview = (type) => {
-    switch (type) {
-      case 'blockchain':
-        return <BlockchainPreview />;
-      case 'school':
-        return <SchoolManagementPreview />;
-      case 'it-asset':
-        return <ITAssetPreview />;
-      default:
-        return null;
-    }
-  };
-
   return (
-    <section id="projects" className="projects-section">
+    <section id="projects" className="projects-section apple-section">
       <div className="section-container">
-        
-        {/* Section Header */}
-        <div className="section-head-editorial">
-          <div className="section-kicker">
-            <span className="kicker-num">03</span>
-            <span className="kicker-title">Projets sélectionnés</span>
-          </div>
-          <h2 className="section-main-title">
-            Conception d'architectures concrètes et code éprouvé.
-          </h2>
-          <p className="section-lead-desc">
-            Des applications conçues avec une attention particulière portée à la robustesse du backend, 
-            à la modélisation rigoureuse des données et à la clarté de l'interface.
-          </p>
+        <div className="apple-section-head apple-section-head--center">
+          <motion.p
+            initial={{ opacity: 0, y: 14 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.6, ease }}
+            className="apple-eyebrow"
+          >
+            Projets
+          </motion.p>
+          <motion.h2
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.7, delay: 0.05, ease }}
+            className="apple-headline"
+          >
+            Conçus comme des produits.
+            <br />
+            Pensés comme des systèmes.
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 14 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.7, delay: 0.1, ease }}
+            className="apple-section-intro"
+          >
+            Des réalisations qui mettent l’accent sur la modélisation, la fiabilité du backend et la clarté de
+            l’expérience.
+          </motion.p>
         </div>
 
-        {/* Projects Cards Grid */}
-        <div className="projects-cards-grid">
+        <div className="projects-showcase">
           {projects.map((project, index) => (
             <motion.article
               key={project.id}
-              initial={{ opacity: 0, y: 24 }}
+              initial={{ opacity: 0, y: 26 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.5, delay: index * 0.12, ease: [0.16, 1, 0.3, 1] }}
-              className="project-card glass-panel"
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.75, ease }}
+              className={`project-showcase-row ${index % 2 === 1 ? 'is-reversed' : ''} accent-${project.accent}`}
             >
-              {/* Bespoke Interactive UI Preview instead of AI stock image */}
-              <div className="project-card-preview-wrap">
-                {renderProjectPreview(project.previewType)}
-                <div className="preview-top-badge">
-                  <span className="project-badge">{project.badge}</span>
-                </div>
-              </div>
-
-              {/* Content Body */}
-              <div className="project-card-body">
-                <div className="project-meta-top">
-                  <span className="project-category">{project.category}</span>
-                  <div className="project-icon-box">{project.icon}</div>
-                </div>
-
-                <h3 className="project-heading">{project.title}</h3>
-                
-                <p className="project-description">
-                  {project.description}
+              <div className="project-showcase-copy">
+                <p className="project-showcase-category">{project.category}</p>
+                <h3 className="project-showcase-title">{project.title}</h3>
+                <p className="project-showcase-problem">
+                  <span>Problématique.</span> {project.problem}
                 </p>
-
-                {/* Technical highlights summary */}
-                <div className="project-key-bullets">
-                  <div className="bullet-item">
-                    <span className="bullet-dot" />
-                    <span>{project.highlights[0]}</span>
-                  </div>
-                  <div className="bullet-item">
-                    <span className="bullet-dot" />
-                    <span>{project.highlights[1]}</span>
-                  </div>
-                </div>
-
-                {/* Tech Tags */}
-                <div className="project-tech-pills">
-                  {project.tech.map((tech) => (
-                    <span key={tech} className="tech-pill">{tech}</span>
+                <p className="project-showcase-desc">{project.description}</p>
+                <ul className="project-showcase-tech" aria-label="Technologies">
+                  {project.tech.map((t) => (
+                    <li key={t}>{t}</li>
                   ))}
-                </div>
-
-                {/* Actions Footer */}
-                <div className="project-card-actions">
+                </ul>
+                <div className="project-showcase-actions">
                   <button
+                    type="button"
                     onClick={() => setActiveModalProject(project)}
-                    className="btn-card-secondary interactive"
+                    className="btn-apple-primary interactive"
                   >
-                    <Info size={15} />
-                    <span>Architecture & Choix</span>
+                    Découvrir le projet <ChevronRight size={16} aria-hidden="true" />
                   </button>
-
                   <a
                     href={project.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn-card-primary interactive"
-                    aria-label={`Voir le dépôt de ${project.title} sur GitHub`}
+                    className="btn-apple-secondary interactive"
                   >
-                    <span>Dépôt GitHub</span>
-                    <GitBranch size={15} />
+                    GitHub <ArrowUpRight size={16} aria-hidden="true" />
                   </a>
+                </div>
+              </div>
+
+              <div className="project-showcase-visual">
+                <div className="project-showcase-visual-frame">
+                  <ProjectVisual type={project.previewType} />
                 </div>
               </div>
             </motion.article>
           ))}
         </div>
 
-        {/* Global Projects Footer Strip */}
-        <div className="projects-bottom-note glass-panel">
-          <div className="bottom-note-left">
-            <span className="note-kicker">Méthodologie logicielle</span>
-            <p className="note-text">
-              Chaque projet fait l’objet d’un travail préalable de modélisation (Merise/UML), 
-              d’un versioning Git propre et documenté, et d’un respect des conventions de code (SOLID, PEP 8, Clean Architecture).
-            </p>
-          </div>
-          <a
-            href="https://github.com/Panda0831"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-swiss-secondary interactive"
-          >
-            <span>Tous mes dépôts sur GitHub</span>
-            <ArrowUpRight size={16} />
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.6, ease }}
+          className="projects-footer-link"
+        >
+          <a href="https://github.com/Panda0831" target="_blank" rel="noopener noreferrer" className="apple-inline-link interactive">
+            Voir tous les dépôts sur GitHub <Code2 size={16} aria-hidden="true" />
           </a>
-        </div>
-
+        </motion.div>
       </div>
 
-      {/* Modal for In-depth Architecture Details */}
       <ProjectDetailModal
         project={activeModalProject}
         isOpen={Boolean(activeModalProject)}
