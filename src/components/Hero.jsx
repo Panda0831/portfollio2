@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowUpRight, Check, Copy } from 'lucide-react';
-import heroPortrait from '../assets/hero.png';
 
 const ease = [0.28, 0.11, 0.32, 1];
 
@@ -114,29 +113,6 @@ export default function Hero() {
             <span>DELF B2 · Python Essentials (en cours) · IBM Z Explorer (en cours)</span>
           </motion.div>
         </div>
-
-        <motion.div
-          className="hero-signature"
-          initial={{ opacity: 0, y: 24, scale: 0.985 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.9, delay: 0.5, ease }}
-        >
-          <div className="hero-signature-image-wrap">
-            <img
-              src={heroPortrait}
-              alt="Illustration de couches logicielles assemblées, symbole d’une architecture construite de ses fondations"
-              className="hero-signature-image"
-              width="343"
-              height="361"
-              fetchPriority="high"
-            />
-          </div>
-          <div className="hero-signature-caption">
-            <span className="hero-signature-index">01 / 03</span>
-            <span className="hero-signature-line" aria-hidden="true" />
-            <span>Concevoir · Construire · Comprendre</span>
-          </div>
-        </motion.div>
 
       </div>
     </section>

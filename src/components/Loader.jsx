@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import motionVideo from '../assets/fanamby_motion.mp4';
+import motionVideo from '../assets/MOTION.mp4';
 
 const FALLBACK_MS = 2400;
 
